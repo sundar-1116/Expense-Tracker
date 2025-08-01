@@ -37,7 +37,7 @@ const Root = () => {
 
   // Redirect to dashboard if authenticated, otherwise to login
   return isAuthenticated ? (
-    <Navigate to="/dashboard" />
+    <Navigate to="/dashboard" /> 
   ) : (
     <Navigate to="/login" />
   );
