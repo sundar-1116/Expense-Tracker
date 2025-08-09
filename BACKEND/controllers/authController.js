@@ -1,71 +1,82 @@
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 
-const generateToken =  (id) => {
-    return jwt.sign({
-        id
-    },process.env.JWT_SECRET, {expiresIn: "1h"});
-}
+const generateToken = (id) => {
+    return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+};
 
-exports.registerUser = async (req,res) => {
-    const { fullName, email, Password, profileImageUrl } = req.body;
+exports.registerUser = async (req, res) => {
+    try {
+        const { fullName, email, password, profileImageUrl } = req.body;
 
-    if(!fullName || !email || !Password){
-        return res.status(400).json({ message: "All feilds are required "});
-    }
-    try{
-        const existingUser  = await User.findOne({ email });
-        if(existingUser) {
-            return res.status(400).json({ message: "Email Aldready in use "});
+        if (!fullName || !email || !password) {
+            return res.status(400).json({ message: "Please fill all required fields" });
+        }
+
+        // Check if user already exists
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ message: "User already exists with this email" });
         }
 
         const user = await User.create({
             fullName,
             email,
-            Password,
-            profileImageUrl,
+            password,
+            profileImageUrl
         });
 
         res.status(201).json({
-            id: user._id,
-            user,
-            token: generateToken(user._id),
+            _id: user._id,
+            fullName: user.fullName,
+            email: user.email,
+            profileImageUrl: user.profileImageUrl,
+            token: generateToken(user._id)
         });
-    } catch (err){
-        res.status(500).json({ message: "Error existing user", error: err.message });
+
+    } catch (error) {
+        console.error("Registration Error:", error);
+        res.status(500).json({ message: "Server error during registration" });
     }
 };
 
-exports.loginUser = async (req,res) => {
-    const { email, Password } = req.body;
-    if(!email || !Password ){
-        return res.status(400).json({message: "All feilds are required "});
-    }
+exports.loginUser = async (req, res) => {
     try {
-        const user = await User.findOne({email});
-        if(!user || !(await user.comparePassword(Password))){
-            return res.status(400).json({message: "Invalid credentials "});
+        const { email, password } = req.body;
+
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(400).json({ message: "Invalid email or password" });
         }
 
-        res.status(200).json({
-            id: user._id,
-            user,
-            token: generateToken(user._id),
+        const isMatch = await user.comparePassword(password);
+        if (!isMatch) {
+            return res.status(400).json({ message: "Invalid email or password" });
+        }
+
+        res.json({
+            _id: user._id,
+            fullName: user.fullName,
+            email: user.email,
+            profileImageUrl: user.profileImageUrl,
+            token: generateToken(user._id)
         });
-    } catch (err) {
-        res.status(500).json({ message: "Error existing user", error: err.message });
+
+    } catch (error) {
+        console.error("Login Error:", error);
+        res.status(500).json({ message: "Server error during login" });
     }
 };
 
-exports.getUserInfo = async (req,res) => {
+exports.getUserInfo = async (req, res) => {
     try {
-        const user = await User.findById(req.user.id).select("-Password");
-
-        if(!user){
-            return res.status(404).json({message: "User not found "});
+        const user = await User.findById(req.user.id).select("-password");
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
         }
-        res.status(200).json(user);
-    } catch (err) {
-        res.status(500).json({ message: "Error existing user", error: err.message });
+        res.json(user);
+    } catch (error) {
+        console.error("Get User Info Error:", error);
+        res.status(500).json({ message: "Server error" });
     }
 };
