@@ -6,8 +6,9 @@ import { validateEmail } from '../../utils/helper';
 import axiosInstance from '../../utils/axiosInstance';
 import ProfilePhotoSelector from '../../components/Inputs/ProfilePhotoSelector';
 import { API_PATHS } from '../../utils/apiPaths';
-import { UserContext } from '../../context/userContext';
-import uploadImage from '../../utils/uploadImage'; 
+import { UserContext } from '../../context/UserContext.jsx';
+import uploadImage from '../../utils/uploadImage';
+
 
 const SignUp = () => {
   const [profilePic, setProfilePic] = useState(null);
@@ -15,6 +16,7 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { updateUser } = useContext(UserContext);
   const navigate = useNavigate();
@@ -22,6 +24,9 @@ const SignUp = () => {
   // Handle Sign Up Form Submit
   const handleSignUp = async (e) => {
     e.preventDefault();
+
+    if (isLoading) return; // Prevent multiple submissions
+
     let profileImageUrl = "";
 
     // ===== Client-side validation =====
@@ -33,12 +38,13 @@ const SignUp = () => {
       setError("Please enter a valid email address.");
       return;
     }
-    if (!password) {
-      setError("Please enter the password");
+    if (!password || password.length < 8) {
+      setError("Password must be at least 8 characters");
       return;
     }
 
     setError("");
+    setIsLoading(true);
 
     try {
       // ===== Try uploading image, but don't block signup if it fails =====
@@ -85,16 +91,21 @@ const SignUp = () => {
         }
 
         setError(message);
+      } else if (error.request) {
+        // Request was made but no response received
+        setError("Network error. Please check your connection.");
       } else {
-        console.error("Network or other error:", error.message);
-        setError(error.message || "Something went wrong, Please try again.");
+        console.error("Error:", error.message);
+        setError(error.message || "Something went wrong. Please try again.");
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <AuthLayout>
-      <div className="lg-w[100%] h-auto md:h-full mt-10 md:md-0 flex flex-col justify-center">
+      <div className="lg:w-full h-auto md:h-full mt-10 md:mt-0 flex flex-col justify-center">
         <h3 className="text-xl font-semibold text-black">Create an Account</h3>
         <p className="text-xs text-slate-700 mt-[5px] mb-6">
           Join us today by entering your details below :)
@@ -130,8 +141,8 @@ const SignUp = () => {
 
           {error && <p className="text-red-500 text-xs pb-2.5">{error}</p>}
 
-          <button type="submit" className="btn-primary">
-            SIGN UP
+          <button type="submit" className="btn-primary" disabled={isLoading}>
+            {isLoading ? "SIGNING UP..." : "SIGN UP"}
           </button>
 
           <p className="text-[13px] text-slate-800 mt-3">
