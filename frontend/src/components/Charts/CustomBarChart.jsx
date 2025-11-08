@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-    Barchart,
+    BarChart,
     Bar,
     XAxis,
     YAxis,
@@ -34,7 +34,7 @@ const CustomBarChart = ({data}) => {
   return (
     <div className='bg-white mt-6'>
         <ResponsiveContainer width="100%" height={380}>
-            <Barchart data={data}>
+            <BarChart  data={data}>
                 <CartesianGrid stroke='none'/>
                 <XAxis dataKey="month" tick = {{fontSize:12, fill: "#555"}} stroke='none'/>
                 <YAxis tick = {{fontSize:12 , fill: "#555"}} stroke='none'/>
@@ -52,7 +52,7 @@ const CustomBarChart = ({data}) => {
                         <Cell key={index} fill={getBarColor(index)}/>
                     ))}
                 </Bar>
-            </Barchart>
+            </BarChart>
         </ResponsiveContainer>
     </div>
   )
