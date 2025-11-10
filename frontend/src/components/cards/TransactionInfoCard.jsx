@@ -7,7 +7,7 @@ import {
 } from 'react-icons/lu'
 
 const TransactionInfoCard = ({
-    title, icon , date, amount, type, hideDeleteBtn
+    title, icon , date, amount, type, hideDeleteBtn ,onDelete, downloadColor = '#111'
 }) => {
     const getAmountStyles = () => {
         type === "income" ? "bg-green-50 text-green-500" : "bg-red-50 text-red-500" ;
@@ -40,6 +40,14 @@ const TransactionInfoCard = ({
                 </h6>
                 {type === "income" ? <LuTrendingUp/> : <LuTrendingDown/>}
             </div>
+
+            <button
+                className="download-btn"
+                style={{ color: downloadColor }}
+                aria-label="download"
+            >
+                {/* Download */}
+            </button>
         </div>
     </div>
   )

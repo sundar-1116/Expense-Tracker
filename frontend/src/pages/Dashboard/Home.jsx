@@ -44,6 +44,8 @@ const Home = () => {
         `${API_PATHS.DASHBOARD.GET_DATA}`
       );
 
+      console.log("API Response:", response.data); // Log the API response
+
       if (response.data) {
         setDashboardData(response.data);
       }
@@ -59,6 +61,9 @@ const Home = () => {
     return () => {};
   }, []);
 
+  // Add this log to check last30DaysExpenses
+  console.log("Last 30 Days Expenses:", dashboardData?.last30DaysExpenses);
+
   return (
     <DashboardLayout activeMenu="Dashboard">
       <div className="my-5 mx-auto">
@@ -66,23 +71,24 @@ const Home = () => {
           <InfoCard
             icon={<IoMdCard/>}
             label="Total Balance"
-            value={addThousandsSeperator(dashboardData?.totalBalance)}
+            value={addThousandsSeperator(dashboardData?.totalbalance || 0)}
             color="bg-primary"
           />
-
-          <InfoCard
-            icon={<LuWalletMinimal/>}
-            label="Total Income"
-            value={addThousandsSeperator(dashboardData?.totalIncome)}
-            color="bg-orange-500"
-          />
+          
+            <InfoCard
+              icon={<LuWalletMinimal/>} // New icon for Total Income
+              label="Total Income"
+              value={addThousandsSeperator(dashboardData?.totalIncome || 0)} // New Total Income card
+              color="bg-green-500" // New color for Total Income
+            />
 
           <InfoCard
             icon={<LuHandCoins/>}
             label="Total Expense"
-            value={addThousandsSeperator(dashboardData?.totalExpense)}
+            value={addThousandsSeperator(dashboardData?.totalExpenses || 0)}
             color="bg-red-500"
           />
+
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
@@ -92,9 +98,9 @@ const Home = () => {
           />
 
           <FinanceOverview
-            totalBalance = {dashboardData?.totalBalance || 0}
-            totalIncome = {dashboardData?.totalIncome || 0}
-            totalExpense = {dashboardData?.totalExpense || 0}
+            totalBalance={dashboardData?.totalbalance || 0}
+            totalIncome={dashboardData?.totalIncome || 0}
+            totalExpense={dashboardData?.totalExpenses || 0}
           />
 
 
@@ -104,7 +110,7 @@ const Home = () => {
           />
 
           <Last30DaysExpenses
-            data={dashboardData?.last30DaysExpenses?.transactions || []}
+            data={dashboardData?.last30DaysExpenses?.transactions || []} // Ensure this is correct
           />
 
           <RecentIncomeWithChart
