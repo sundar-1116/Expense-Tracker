@@ -66,7 +66,7 @@ const Login = () => {
           value={email}
           onChange={({target}) => setEmail(target.value)}
           label = "Email Address"
-          placeholder='chinniminnu1116@gmail.com'
+          placeholder='Tracker@Expense.com'
           type='text'
           />
 
@@ -98,3 +98,4 @@ const Login = () => {
 };
 
 export default Login;
+
