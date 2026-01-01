@@ -29,6 +29,12 @@ const SignUp = () => {
 
     let profileImageUrl = "";
 
+    // Check internet connection first
+    if (!navigator.onLine) {
+      setError("No internet connection. Please check your network.");
+      return;
+    }
+
     // ===== Client-side validation =====
     if (!fullName) {
       setError("Please enter your name");
@@ -76,13 +82,16 @@ const SignUp = () => {
     } catch (error) {
       console.error("SignUp error:", error);
 
+      // Handle different types of errors
       if (error.response) {
+        // Server responded with error status
         const message =
           error.response.data.message ||
           error.response.data.error ||
           "Unknown server error";
 
         console.error("API Error Message:", message);
+        console.error("Status Code:", error.response.status);
 
         // If backend says user already exists → redirect to login
         if (message.toLowerCase().includes("exists")) {
@@ -93,8 +102,20 @@ const SignUp = () => {
         setError(message);
       } else if (error.request) {
         // Request was made but no response received
-        setError("Network error. Please check your connection.");
+        console.error("Request made but no response:", error.request);
+        console.error("Request config:", error.config);
+        console.error("Base URL:", axiosInstance.defaults.baseURL);
+        
+        // More specific error messages
+        if (error.code === 'ECONNABORTED') {
+          setError("Request timeout. Please try again.");
+        } else if (error.message.includes('Network Error')) {
+          setError("Cannot connect to server. Please ensure the backend is running and CORS is configured.");
+        } else {
+          setError("Network error. Please check your connection and try again.");
+        }
       } else {
+        // Something else happened
         console.error("Error:", error.message);
         setError(error.message || "Something went wrong. Please try again.");
       }
