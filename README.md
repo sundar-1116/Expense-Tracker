@@ -1,76 +1,86 @@
-LIVE LINK : https://track-ur-expense-frontend.onrender.com/login
+# 💰 Expense Tracker – MERN Stack Application
 
-📊 Expense Tracker
+A full-stack **Expense Tracker application** built using the **MERN stack** that helps users manage their **income and expenses**, analyze spending with **charts**, and export records as **Excel files**. The app includes **secure authentication**, a clean UI, and is fully responsive.
 
-A structured and user-friendly expense tracking application designed to help users record, organize, and analyze their financial transactions. The system provides a clear overview of income and expenses, enabling informed financial planning and disciplined budgeting.
 
----
+## 🚀 Features
 
-🔍 Overview
-
-Manual expense tracking is inefficient and often inaccurate. This Expense Tracker application addresses that gap by offering a centralized platform to manage financial records digitally. It emphasizes clarity, usability, and scalability, making it suitable for both personal use and academic or portfolio projects.
-
----
-
-✨ Key Features
-
-• ➕ Create, update, and delete income and expense entries
-• 🗂️ Categorize transactions for structured financial records
-• 📈 Automatic calculation of balance, total income, and expenses
-• 📱 Responsive and intuitive user interface
-• 💾 Backend-supported persistent data storage
+- 🔐 User authentication (Signup / Login / Logout)
+- 💵 Add, update, and delete income & expense transactions
+- 📋 View transaction history with categories
+- 📊 Analyze spending using interactive charts
+- 📈 Dashboard with balance summary
+- 📥 Export income & expense data as Excel files
+- 🎨 Fully responsive UI (mobile & desktop)
+- 🍪 JWT authentication with HTTP-only cookies
 
 ---
 
-🧩 Project Architecture
+## 🛠️ Tech Stack
 
-The application follows a modular full-stack architecture, ensuring separation of concerns and maintainability:
+### Frontend
+- React (Vite)
+- Tailwind CSS
+- Axios
+- Chart.js / Recharts
+- React Router DOM
 
-• 🖥️ Frontend – Responsible for user interaction and presentation logic
-• ⚙️ Backend – Handles business logic, data validation, and storage
-
-This design supports future expansion and clean code management.
-
+### Backend
+- Node.js
+- Express.js
+- MongoDB + Mongoose
+- JWT Authentication
+- Cookie-Parser
 ---
 
-🧭 Application Usage
+<img width="1901" height="872" alt="image" src="https://github.com/user-attachments/assets/f73fca62-3fbb-4379-89fe-bbb9dbe2551b" />
 
-Users can log daily transactions, assign relevant categories, and review financial summaries in real time. The system dynamically updates all calculations, reducing manual effort and minimizing errors.
+<img width="1897" height="866" alt="image" src="https://github.com/user-attachments/assets/a33f92a0-e6d6-49da-9ea5-088948385171" />
 
----
+<img width="1919" height="997" alt="image" src="https://github.com/user-attachments/assets/38016064-e3a2-471c-9fd0-e2dfa7f70f34" />
 
-🎯 Intended Use Cases
+<img width="1919" height="1001" alt="image" src="https://github.com/user-attachments/assets/091ce3ef-d0a9-4992-b8af-fd74f8d31b5a" />
 
-• Personal finance and expense management
-• Monthly budget tracking and analysis
-• Academic demonstrations of full-stack development
-• Portfolio showcase for internships or placements
+<img width="1919" height="1001" alt="image" src="https://github.com/user-attachments/assets/a873857f-3ba9-4f19-8d90-b86514a92fc7" />
+
 
 ---
+## 📂 Project Structure
 
-🚀 Future Enhancements
+```plaintext
+Expense-Tracker/
+├── backend/
+│   ├── config/
+│   ├── controllers/
+│   ├── middleware/
+│   ├── models/
+│   ├── routes/
+│   ├── uploads/
+│   ├── income_details.xlsx
+│   ├── server.js
+│   ├── package.json
+│   └── package-lock.json
+│
+├── frontend/
+│   ├── public/
+│   │   └── vite.svg
+│   ├── src/
+│   │   ├── assets/
+│   │   ├── components/
+│   │   ├── context/
+│   │   ├── hooks/
+│   │   ├── pages/
+│   │   ├── utils/
+│   │   ├── App.jsx
+│   │   ├── index.css
+│   │   └── main.jsx
+│   ├── index.html
+│   ├── eslint.config.js
+│   ├── package.json
+│   └── package-lock.json
+│
+├── .gitignore
+└── README.md
 
-• 🔐 User authentication and authorization
-• 📊 Data visualization through charts and analytics dashboards
-• 📤 Export functionality (PDF / CSV reports)
-• 🔎 Advanced filtering and search capabilities
 
----
 
-🤝 Contributions
-
-Contributions are welcome and encouraged. Developers may enhance functionality, improve performance, or refactor code by submitting well-documented pull requests.
-
----
-
-📄 License
-
-This project currently does not include an explicit license. An open-source license such as MIT may be added in future revisions.
-
----
-
-👤 Maintainers
-
-Developed and maintained by the project contributors.
-
----
