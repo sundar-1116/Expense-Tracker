@@ -2,6 +2,8 @@
 
 LIVE LINK : https://track-ur-expense-frontend.onrender.com
 
+DEMO AND MEDIA LINK: https://drive.google.com/drive/folders/112EHI3LU5u54Dm3Fcj_6givaGBCUNchy?usp=sharing
+
 A full-stack **Expense Tracker application** built using the **MERN stack** that helps users manage their **income and expenses**, analyze spending with **charts**, and export records as **Excel files**. The app includes **secure authentication**, a clean UI, and is fully responsive.
 
 
